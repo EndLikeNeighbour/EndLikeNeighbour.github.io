@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>海小棠击掌_20250520
+    </title>
+    <style>
+        body 
+        {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-image:url("https://inews.gtimg.com/om_bt/Owunz3-aJQbxyThwf2Ib4vlL7LOUP0SmqodKppQ-zoLzMAA/641");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family:'宋体', 'Times New Roman', Times, serif sans-serif;
+        }
+
+        #container 
+        {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        #haixiaotang 
+        {
+            width: 220px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+        }
+
+            #haixiaotang:hover 
+            {
+                transform: scale(1.08) rotate(-3deg);
+            }
+
+        #counter 
+        {
+            font-size: 28px;
+            color: #ffffff;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            font-weight:600;
+        }
+
+        .high-five-animation 
+        {
+            animation: highFive 0.5s ease;
+        }
+
+        @keyframes highFive 
+        {
+            0% 
+            {
+                transform: translateY(0);
+            }
+
+            50% 
+            {
+                transform: translateY(-30px) rotate(10deg);
+            }
+
+            100% 
+            {
+                transform: translateY(0);
+            }
+        }
+
+        .message-box 
+        {
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            animation: floatUp 1s ease forwards;
+            min-width: 180px;
+            text-align: center;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+
+        @keyframes floatUp 
+        {
+            0% 
+            {
+                opacity: 0;
+                transform: translate(-50%, 20px);
+            }
+
+            100% 
+            {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        .achievement-badge 
+        {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff6b6b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            animation: slideIn 0.5s ease;
+            display: none;
+        }
+
+        @keyframes slideIn 
+        {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="achievement-badge" id="achievement"></div>
+
+    <div id="container">
+        <img src="https://picx.zhimg.com/80/v2-d0055f4afa224fa5a36e077566e48fff_1440w.webp?source=2c26e567"
+             alt="海小棠"
+             id="haixiaotang"
+             onclick="handleHighFive()">
+    </div>
+    <div id="counter">击掌次数：0</div>
+
+    <script>
+        let count = 0;
+        const messages = [
+            "你好！欢迎来到天津大学！",
+            "今天的你也要加油哦！✨",
+            "天大校园的春天最美了！🌸",
+            "我们一起为梦想努力吧！💪",
+            "击个掌，交个朋友吧！👋",
+            "你知道天大的校训是啥吗？🤔",
+            "实事求是，是天大人的品格！🎓",
+            "兴学强国，是天大人的担当！🎓",
+            "天津大学，是天津唯一酒吧舞！💪🎓",
+            "要常来科图春水学习哦~📚",
+            "百卅荣光，强国担当！💪"
+
+        ];
+
+        const achievements = {
+            5: "击掌新星",
+            10: "互动达人",
+            20: "海小棠挚友"
+        };
+
+        function handleHighFive() 
+        {
+            // 增加计数
+            count++;
+
+            // 更新显示
+            updateCounter();
+
+            // 播放动画
+            playHighFiveAnimation();
+
+            // 显示随机消息
+            showFloatingMessage();
+
+            // 检查成就
+            checkAchievement();
+        }
+
+        function updateCounter() 
+        {
+            const counter = document.getElementById('counter');
+            counter.textContent = `击掌次数：${count}`;
+            counter.style.transform = 'scale(1.1)';
+            setTimeout(() => counter.style.transform = 'scale(1)', 200);
+        }
+
+        function playHighFiveAnimation() 
+        {
+            const character = document.getElementById('haixiaotang');
+            character.classList.add('high-five-animation');
+            setTimeout(() => character.classList.remove('high-five-animation'), 500);
+        }
+
+        function showFloatingMessage() 
+        {
+            const messageBox = document.createElement('div');
+            messageBox.className = 'message-box';
+            messageBox.textContent = messages[Math.floor(Math.random() * messages.length)];
+
+            document.getElementById('container').appendChild(messageBox);
+
+            setTimeout(() => 
+            {
+                messageBox.style.opacity = '0';
+                setTimeout(() => messageBox.remove(), 1000);
+            }, 2000);
+        }
+
+        function checkAchievement() 
+        {
+            const achievement = achievements[count];
+            if (achievement) 
+            {
+                const badge = document.getElementById('achievement');
+                badge.textContent = `解锁成就：${achievement}！`;
+                badge.style.display = 'block';
+                setTimeout(() => badge.style.display = 'none', 3000);
+            }
+        }
+    </script>
+</body>
+</html>
